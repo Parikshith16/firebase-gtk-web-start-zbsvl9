@@ -4,7 +4,7 @@ import './style.css';
 import { initializeApp } from 'firebase/app';
 
 // Add the Firebase products and methods that you want to use
-import {} from 'firebase/auth';
+import { getAuth, EmailAuthProvider } from 'firebase/auth';
 import {} from 'firebase/firestore';
 
 import * as firebaseui from 'firebaseui';
@@ -27,18 +27,19 @@ let db, auth;
 
 async function main() {
   // Add Firebase project configuration object here
-  
+
   const firebaseConfig = {
-    apiKey: "AIzaSyD-jO2hUKqAOVOTSePOh2juUOCpngn2AXI",
-    authDomain: "fir-web-codelab-867d6.firebaseapp.com",
-    projectId: "fir-web-codelab-867d6",
-    storageBucket: "fir-web-codelab-867d6.appspot.com",
-    messagingSenderId: "58513686965",
-    appId: "1:58513686965:web:e602719393ad7332dc99fc"
+    apiKey: 'AIzaSyD-jO2hUKqAOVOTSePOh2juUOCpngn2AXI',
+    authDomain: 'fir-web-codelab-867d6.firebaseapp.com',
+    projectId: 'fir-web-codelab-867d6',
+    storageBucket: 'fir-web-codelab-867d6.appspot.com',
+    messagingSenderId: '58513686965',
+    appId: '1:58513686965:web:e602719393ad7332dc99fc',
   };
 
   // initializeApp(firebaseConfig);
-
+  initializeApp(firebaseConfig);
+  auth = getAuth();
   // FirebaseUI config
   const uiConfig = {
     credentialHelper: firebaseui.auth.CredentialHelper.NONE,
@@ -55,6 +56,10 @@ async function main() {
     },
   };
 
-  // const ui = new firebaseui.auth.AuthUI(auth);
+  const ui = new firebaseui.auth.AuthUI(auth);
+  // Listen to RSVP button clicks
+  startRsvpButton.addEventListener('click', () => {
+    ui.start('#firebaseui-auth-container', uiConfig);
+  });
 }
 main();
